@@ -44,11 +44,13 @@
         <script>
             const KEY_Backspace = 8;
             function clear(e){
-              if(e.keyCode===KEY_Backspace&&(e.ctrlKey||e.metaKey||e.altKey)){
-                localStorage.clear();
-                location.reload();
-                e.preventDefault();
-              }
+                if(e.keyCode===KEY_Backspace&&(e.ctrlKey||e.metaKey||e.altKey)){
+                    confirm("确认清空数据?") && (
+                        localStorage.clear(),
+                        location.reload(),
+                        e.preventDefault()
+                    )
+                }
             }
             window.addEventListener("keydown", clear, false);
             const canvas = document.querySelector('canvas');
