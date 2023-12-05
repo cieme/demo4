@@ -95,8 +95,7 @@ export class CalcController extends Component {
     private _stopPlay() {
         this.playFlag = false;
         sys.localStorage.removeItem('play_flag');
-
-        this.agv.clearCar();
+        this.agv && this.agv.clearCar();
     }
 
     update(dt: number): void {
@@ -111,7 +110,7 @@ export class CalcController extends Component {
 
     /**
      * 计算
-     * @param plan 
+     * @param plan
      */
     public calc(plan:string) {
         if(this.playFlag) {
@@ -138,7 +137,7 @@ export class CalcController extends Component {
 
     /**
      * 初始化
-     * @param plan 
+     * @param plan
      */
     private _initConfig(plan:string) {
         this.config.plan = plan;
@@ -199,7 +198,7 @@ export class CalcController extends Component {
 
     /**
      * 初始化路径
-     * @param plan 
+     * @param plan
      */
     private _initRoute(plan:string) {
         this.config.pointMap = JSON.parse(sys.localStorage.getItem('plan_point:' + plan));

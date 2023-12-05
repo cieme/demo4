@@ -2,6 +2,7 @@ import { _decorator, Component, instantiate, Node, Prefab, sys, director, Color 
 import { PlanNameController } from './PlanNameController';
 const { ccclass, property } = _decorator;
 
+import { ToolbarController } from '../../toolbar/script/ToolbarController';
 @ccclass('PlanListController')
 export class PlanListController extends Component {
     @property({type: Prefab})
@@ -9,6 +10,9 @@ export class PlanListController extends Component {
 
     @property({type: Node})
     public layout: Node;
+
+    @property({type: Node})
+    public toolbar: Node;
 
     protected _defaultColor: Color = new Color(102, 102, 102);
 
@@ -18,7 +22,7 @@ export class PlanListController extends Component {
         let planList = JSON.parse(sys.localStorage.getItem('plan_list'));
         if( planList == null) {
             planList = [
-                {name: 'plan0', showName: '方案1'}, 
+                {name: 'plan0', showName: '方案1'},
                 {name: 'plan1', showName: '方案2'},
                 {name: 'plan2', showName: '方案3'},
             ];
@@ -53,7 +57,7 @@ export class PlanListController extends Component {
 
     /**
      * 构建
-     * @param planName 
+     * @param planName
      */
     _buildPlanName(planName, showName, select) {
         let node = instantiate(this.planNamePrefab);
@@ -81,7 +85,7 @@ export class PlanListController extends Component {
     }
 
     _selectChange(planNameController : PlanNameController, select : boolean) {
-        planNameController.planName.isUnderline = select; 
+        planNameController.planName.isUnderline = select;
         if( select ) {
             planNameController.planName.color = this._selectColor;
         }else {
@@ -96,7 +100,7 @@ export class PlanListController extends Component {
 
             this._selectChange(planNameController, node.name == planName);
         }
-
+        this.toolbar.getComponent(ToolbarController).onClickStop(); // 选择面板时，停止播放
         sys.localStorage.setItem('plan_select', planName);
         director.emit('plan_select', planName);
     }
