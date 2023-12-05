@@ -40,7 +40,7 @@ export class RenderController extends Component {
 
     @property({type: Prefab})
     public arrowPrefab: Prefab;
-    
+
     @property({type: Node})
     public arrowNode: Node;
 
@@ -137,7 +137,7 @@ export class RenderController extends Component {
 
     _onSave() {
         let plan = sys.localStorage.getItem('plan_select');
-
+        // console.log('render-c__onSave','plan_select', plan);
         this._saveItem(plan);
         this._savePoint(plan);
     }
@@ -231,7 +231,7 @@ export class RenderController extends Component {
 
     /**
      * 画路径
-     * @param graphics 
+     * @param graphics
      */
     private _drawPath(graphics:Graphics) {
         if( this.road.children.length <= 0 )
@@ -245,7 +245,7 @@ export class RenderController extends Component {
                 continue;
             }
 
-            let _pointNode = this._findPointByUniqueId(_startRender.rightId); 
+            let _pointNode = this._findPointByUniqueId(_startRender.rightId);
             if( _pointNode == null ) {
                 continue;
             }
@@ -287,8 +287,8 @@ export class RenderController extends Component {
     }
 
     /**
-     * 
-     * @param position 
+     *
+     * @param position
      */
     private _addArrow(startPosition:Vec3, endPosition:Vec3) {
         let _node = instantiate(this.arrowPrefab);
@@ -335,6 +335,7 @@ export class RenderController extends Component {
     }
 
     private _onLinkPlay() {
+        // this._onSave();
         this.linkController.node.active = true;
     }
 

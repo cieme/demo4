@@ -14,7 +14,15 @@ export class CarController extends Component {
     /**
      * 路径列表
      */
-    private positionMap;
+    private _positionMap: any = {};
+
+    private get positionMap (){
+        return this._positionMap;
+    }
+    private set positionMap (value){
+        console.log('set positionMap 了',new Date().getTime());
+        this._positionMap = value;
+    }
 
     private curPath: string = "";
 
@@ -60,12 +68,13 @@ export class CarController extends Component {
         let plan = sys.localStorage.getItem('plan_select');
         this.positionMap = JSON.parse(sys.localStorage.getItem('plan_point:' + plan));
 
+        console.log('onload',this.positionMap);
+
         this.curPath = "";
         this.node.position = v3(-10000, -10000, 0);
 
         let param = JSON.parse(sys.localStorage.getItem('plan_param:' + plan));
         this._speed = Number(param['moveSpeed']);
-
         // this._calcPath();
     }
 
@@ -98,7 +107,8 @@ export class CarController extends Component {
             this._moveEnd();
             return;
         }
-
+        console.log('this.curPath',this.curPath);
+        console.log(this.positionMap)
         this._startPos = this.positionMap[this.curPath];
         this._endPos = this.positionMap[this.positionMap[this.curPath].rightId];
 
@@ -141,10 +151,10 @@ export class CarController extends Component {
 
     /**
      * 小车移动
-     * @param carId 
-     * @param startPosition 
-     * @param endPosition 
-     * @returns 
+     * @param carId
+     * @param startPosition
+     * @param endPosition
+     * @returns
      */
     _carRun(carId:string, startPosition:string, endPosition:string) {
         // console.error('ctrl car run', carId, this.carId);
@@ -164,7 +174,6 @@ export class CarController extends Component {
         if( carId != this.carId ) {
             return;
         }
-
         this.node.removeFromParent();
     }
 

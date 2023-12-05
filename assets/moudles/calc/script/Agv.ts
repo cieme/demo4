@@ -56,7 +56,7 @@ export class Agv {
 
     /**
      * 产生小汽车
-     * @param type 
+     * @param type
      */
     public _spanCar(type:string, carId:string) {
         let _car = new Car;
@@ -69,9 +69,9 @@ export class Agv {
 
     /**
      * 获取小车状态的数量
-     * @param time 
-     * @param status 
-     * @returns 
+     * @param time
+     * @param status
+     * @returns
      */
     public getCarCount(time:number, status:Status) {
         let _count = 0;
@@ -99,7 +99,7 @@ export class Agv {
 
     /**
      * 总处理入口
-     * @param time 
+     * @param time
      */
     public handle(time:number) : boolean {
         // 先处理小车的状态
@@ -144,8 +144,8 @@ export class Agv {
 
     /**
      * 是否所有的小车都是在起点的等待状态
-     * @param time 
-     * @returns 
+     * @param time
+     * @returns
      */
     public isAllCarWait(time:number) {
         for(let _key in  this.carList) {
@@ -195,7 +195,7 @@ export class Agv {
 
     /**
      * 真正的开始小车
-     * @param time 
+     * @param time
      */
     private _realHandle(time:number, type:TypeList) {
         this._insertDemand(time, type);
@@ -210,8 +210,8 @@ export class Agv {
 
     /**
      * 查找符合完美条件的
-     * @param time 
-     * @returns 
+     * @param time
+     * @returns
      */
     private _findMatterPerfect(time:number) {
         for(let _key in TypeList) {
@@ -227,8 +227,8 @@ export class Agv {
 
     /**
      * 查找符合条件的物料
-     * @param time 
-     * @returns 
+     * @param time
+     * @returns
      */
     private _findMatterCheck(time:number) {
         for(let _key in TypeList) {
@@ -244,9 +244,9 @@ export class Agv {
 
     /**
      * 是否已经完成
-     * @param time 
-     * @param type 
-     * @returns 
+     * @param time
+     * @param type
+     * @returns
      */
     private _hasTaskComplete(time:number, type:string) {
         let _count = this._findDemandInTask(time, type);
@@ -259,8 +259,8 @@ export class Agv {
 
     /**
      * 查找当前时间断内完成任务数量
-     * @param time 
-     * @param type 
+     * @param time
+     * @param type
      */
     private _findDemandInTask(time:number, type:string) {
         let _count = 0;
@@ -284,8 +284,8 @@ export class Agv {
 
     /**
      * 插入需求完成
-     * @param time 
-     * @param type 
+     * @param time
+     * @param type
      */
     private _insertDemand(time:number, type:string) {
         this.demandTimeline[time] = type;
@@ -293,8 +293,8 @@ export class Agv {
 
     /**
      * 计算任务区间
-     * @param time 
-     * @returns 
+     * @param time
+     * @returns
      */
     private _calcTask(time:number) {
         return Math.floor(time / this.demand_space);
@@ -302,8 +302,8 @@ export class Agv {
 
     /**
      * 选择小车
-     * @param time 
-     * @param type 
+     * @param time
+     * @param type
      */
     private _selectCar(time:number, type:TypeList):Car {
         let _carList = this._selectCarByStatus(time, type, Status.Wait);
@@ -332,9 +332,9 @@ export class Agv {
 
     /**
      * 查询符合条件车的列表
-     * @param time 
-     * @param type 
-     * @param status 
+     * @param time
+     * @param type
+     * @param status
      */
     private _selectCarByStatus(time:number, type:TypeList, status:Status) {
         let _arr = new Array<Car>;
@@ -350,8 +350,8 @@ export class Agv {
 
     /**
      * 预定物料
-     * @param time 
-     * @param car 
+     * @param time
+     * @param car
      */
     private _fixMatter(time:number, car:Car, type:TypeList) {
         if( car.agvType == TypeList.Door || car.agvType == TypeList.Carpet ) {
@@ -363,8 +363,8 @@ export class Agv {
 
     /**
      * 多种的物料
-     * @param time 
-     * @param car 
+     * @param time
+     * @param car
      */
     private _multiFixMatter(time:number, car:Car, type:TypeList) {
         this._lockMatter(time, car, type);
@@ -383,9 +383,9 @@ export class Agv {
 
     /**
      * 锁定物料
-     * @param time 
-     * @param car 
-     * @param type 
+     * @param time
+     * @param car
+     * @param type
      */
     private _lockMatter(time:number, car:Car, type:TypeList) {
         let _count = this.cache.getCountByType(time, type);
@@ -407,8 +407,8 @@ export class Agv {
 
     /**
      * 启动车
-     * @param time 
-     * @param car 
+     * @param time
+     * @param car
      */
     private _startCar(time:number, car:Car) {
         car.begin(time);
@@ -420,10 +420,10 @@ export class Agv {
 
     /**
      * 让车开始跑
-     * @param time 
-     * @param car 
-     * @param startPos 
-     * @param endPost 
+     * @param time
+     * @param car
+     * @param startPos
+     * @param endPost
      */
     private _runCar(time:number, car:Car, startPosition:string, endPosition:string) {
         car.statusChange(time, Status.Run);
@@ -437,7 +437,7 @@ export class Agv {
 
     /**
      * 每次处理汽车
-     * @param time 
+     * @param time
      */
     private _handleCar(time:number) {
         for(let _key in this.carList) {
@@ -450,8 +450,8 @@ export class Agv {
 
     /**
      * 处理小车的跑
-     * @param time 
-     * @param car 
+     * @param time
+     * @param car
      */
     private _handleCarRun(time:number, car:Car) {
         if( car.getStatus(time) != Status.Run ) {
@@ -489,8 +489,8 @@ export class Agv {
 
     /**
      * 处理小车装载
-     * @param time 
-     * @param car 
+     * @param time
+     * @param car
      */
     private _handleCarHook(time:number, car:Car) {
         if( car.getStatus(time) != Status.Hook ) {
@@ -510,8 +510,8 @@ export class Agv {
 
     /**
      * 处理小车卸载
-     * @param time 
-     * @param car 
+     * @param time
+     * @param car
      */
     private _handleCarUnhook(time:number, car:Car) {
         if( car.getStatus(time) != Status.Unhook ) {
@@ -543,8 +543,8 @@ export class Agv {
 
     /**
      * 开始装载
-     * @param time 
-     * @param car 
+     * @param time
+     * @param car
      */
     private _startHook(time:number, car:Car) {
         car.statusChange(time, Status.Hook);
@@ -560,9 +560,9 @@ export class Agv {
     }
 
     /**
-     * 
-     * @param time 
-     * @param car 
+     *
+     * @param time
+     * @param car
      */
     private _startUnHook(time:number, car:Car) {
         car.statusChange(time, Status.Unhook);
@@ -571,25 +571,25 @@ export class Agv {
 
     /**
      * 统计
-     * @param data 
-     * @param car 
+     * @param data
+     * @param car
      */
     private _carStatistics(typeData:{}, car:Car) {
         let _carData = {}
         _carData['countDeliveryTime'] = car.statisticsArray.length;
 
         for(let _index in car.statisticsArray) {
-            let _statistics = car.statisticsArray[_index]; 
+            let _statistics = car.statisticsArray[_index];
             for(let _key in  Status) {
                 let _time = _statistics[Status[_key]];
                 let _total = _carData[Status[_key]];
-    
+
                 if( _total == null ) {
                     _total = _time;
                 } else {
                     _total = _total + _time;
                 }
-    
+
                 _carData[Status[_key]] = _total;
             }
 
@@ -613,7 +613,7 @@ export class Agv {
             } else {
                 typeData['totalDeliveryTime'] = typeData['totalDeliveryTime'] +  _deliveryTime;
             }
-        } 
+        }
 
         if( typeData['countDeliveryTime'] == null ) {
             typeData['countDeliveryTime'] = car.statisticsArray.length;

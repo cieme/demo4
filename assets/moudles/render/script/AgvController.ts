@@ -25,7 +25,7 @@ export class AgvController extends Component {
     }
 
     update(dt: number): void {
-        
+
     }
 
     /**

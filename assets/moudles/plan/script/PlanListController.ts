@@ -100,9 +100,11 @@ export class PlanListController extends Component {
 
             this._selectChange(planNameController, node.name == planName);
         }
-        this.toolbar.getComponent(ToolbarController).onClickStop(); // 选择面板时，停止播放
+        // this.toolbar.getComponent(ToolbarController).onClickStop(); // 选择面板时，停止播放
         sys.localStorage.setItem('plan_select', planName);
         director.emit('plan_select', planName);
+        director.emit('plan_play_stop'); // 停止播放
+        director.emit('render_play_end'); // 刷新按钮状态
     }
 
     _editPlan(planName) {

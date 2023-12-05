@@ -62,6 +62,8 @@ export class ToolbarController extends Component {
     }
 
     onClickPlay() {
+        // this.onClickSave();
+        // director.emit('render_save');
         director.emit('plan_play_start');
         this.refreshButtonStatus(true);
     }
@@ -74,14 +76,14 @@ export class ToolbarController extends Component {
         director.emit('plan_play_stop');
         this.refreshButtonStatus(false);
     }
-    
+
     private _onPlayEnd() {
         this.refreshButtonStatus(false);
     }
 
     /**
      * 是否是否播放中进行设定
-     * @param playing 
+     * @param playing
      */
     private refreshButtonStatus(playing) {
         this.playButton.changeStatus(playing ? ButtonStatus.Press : ButtonStatus.Normal);
